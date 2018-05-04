@@ -10,7 +10,10 @@
 
 - unity中拍照，并对内容识别。
 - 优化oc回调。关于UnitySendMessage方法，NSString, const char*数据类型，等。
-- arkit ARFrame的数据交互，oc层面取得CVPixelBufferRef。
+- 获取arkit的pixelbuffer，实时传给本插件的oc层 CVPixelBufferRef。
 - 作为Pack包，依赖ARKit插件，避免session、buffer冲突。
 - （热更新？）获取更多的model，使用机器学习训练。
 - more...
+
+## 参考
+https://www.jianshu.com/p/ed8e76081cad
