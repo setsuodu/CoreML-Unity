@@ -24,6 +24,6 @@ public class OSHookBridge
     /// 调用.m实例中的方法
     /// </summary>
     [DllImport("__Internal")]
-    public static extern int GetInstanceString(IntPtr instanceKey);
+    public static extern int GetInstanceInt(IntPtr instanceKey);
     //*/
 }

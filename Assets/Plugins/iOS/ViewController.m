@@ -15,6 +15,8 @@ NSString * strPath = nil;
     NSString *sceneLabel = [self predictImageScene:image];
     NSLog(@"Scene label is: %@", sceneLabel);
     
+    UnitySendMessage("Main Camera", "GetResult", sceneLabel);
+    
     return 0;
 }
 

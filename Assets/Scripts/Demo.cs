@@ -10,7 +10,8 @@ using UnityEngine.UI;
  */
 public class Demo : MonoBehaviour
 {
-    public Image m_image;
+    public Image m_textImage;
+    public Text m_resultText;
 
     void Start()
     {
@@ -22,13 +23,13 @@ public class Demo : MonoBehaviour
         if (Application.platform == RuntimePlatform.IPhonePlayer)
         {
             IntPtr handle = OSHookBridge.CreateInstance();
-            Debug.Log(OSHookBridge.GetInstanceString(handle));
+            Debug.Log(OSHookBridge.GetInstanceInt(handle));
         }
     }
 
     public void ToIOS()
     {
-        Texture2D t2d = m_image.sprite.texture;
+        Texture2D t2d = m_textImage.sprite.texture;
 
         byte[] bytes = t2d.EncodeToJPG();
         string savePath = Application.persistentDataPath + "/testImage.jpg";
@@ -41,5 +42,10 @@ public class Demo : MonoBehaviour
         {
             OSHookBridge.ImagePathToIOS(savePath);
         }
+    }
+
+    public void GetResult(string res)
+    {
+        m_resultText.text = res;
     }
 }
