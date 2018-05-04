@@ -12,13 +12,7 @@
 @interface ViewController : NSObject
 
 //C++
-//+ (int) returnInt;
-
-//+ (NSString*) returnString;
-
 - (int) returnInstanceInt;
-
-//- (NSString*) returnInstanceString;
 
 //OC
 + (NSString*) createInstance;
@@ -32,10 +26,7 @@ extern "C"
 {
 #endif
     
-    void ImagePathToIOS(char* str)
-    {
-        NSLog(@"Unity传递过来的参数: %s", str);
-    }
+    void ImagePathToIOS(char* str);
     
 #if defined (__cplusplus)
 }
