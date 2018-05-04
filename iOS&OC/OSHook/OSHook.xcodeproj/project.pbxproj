@@ -1,0 +1,292 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9E374BF61E2BAF4C006A5AD3 /* HookBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E374BF51E2BAF4C006A5AD3 /* HookBridge.mm */; };
+		9E374BF81E2BB0CE006A5AD3 /* HookBridge.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9E374BF71E2BAF63006A5AD3 /* HookBridge.h */; };
+		9ECD788D209C13610002C705 /* GoogLeNetPlaces.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD788C209C13610002C705 /* GoogLeNetPlaces.mlmodel */; };
+		9ECD7890209C137F0002C705 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD788E209C137F0002C705 /* UIImage+Utils.m */; };
+		9ECD7893209C138B0002C705 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD7892209C138B0002C705 /* ViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9E374BE41E2BAE6E006A5AD3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				9E374BF81E2BB0CE006A5AD3 /* HookBridge.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9E374BE61E2BAE6F006A5AD3 /* libOSHook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOSHook.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E374BF51E2BAF4C006A5AD3 /* HookBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HookBridge.mm; sourceTree = "<group>"; };
+		9E374BF71E2BAF63006A5AD3 /* HookBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HookBridge.h; sourceTree = "<group>"; };
+		9ECD788C209C13610002C705 /* GoogLeNetPlaces.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GoogLeNetPlaces.mlmodel; sourceTree = "<group>"; };
+		9ECD788E209C137F0002C705 /* UIImage+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utils.m"; sourceTree = "<group>"; };
+		9ECD788F209C137F0002C705 /* UIImage+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Utils.h"; sourceTree = "<group>"; };
+		9ECD7891209C138B0002C705 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9ECD7892209C138B0002C705 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9E374BE31E2BAE6E006A5AD3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9E374BDD1E2BAE6E006A5AD3 = {
+			isa = PBXGroup;
+			children = (
+				9E374BE81E2BAE6F006A5AD3 /* OSHook */,
+				9E374BE71E2BAE6F006A5AD3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9E374BE71E2BAE6F006A5AD3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9E374BE61E2BAE6F006A5AD3 /* libOSHook.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9E374BE81E2BAE6F006A5AD3 /* OSHook */ = {
+			isa = PBXGroup;
+			children = (
+				9ECD788F209C137F0002C705 /* UIImage+Utils.h */,
+				9ECD788E209C137F0002C705 /* UIImage+Utils.m */,
+				9ECD7891209C138B0002C705 /* ViewController.h */,
+				9ECD7892209C138B0002C705 /* ViewController.m */,
+				9E374BF51E2BAF4C006A5AD3 /* HookBridge.mm */,
+				9E374BF71E2BAF63006A5AD3 /* HookBridge.h */,
+				9ECD788C209C13610002C705 /* GoogLeNetPlaces.mlmodel */,
+			);
+			path = OSHook;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9E374BE51E2BAE6E006A5AD3 /* OSHook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9E374BEF1E2BAE6F006A5AD3 /* Build configuration list for PBXNativeTarget "OSHook" */;
+			buildPhases = (
+				9E374BE21E2BAE6E006A5AD3 /* Sources */,
+				9E374BE31E2BAE6E006A5AD3 /* Frameworks */,
+				9E374BE41E2BAE6E006A5AD3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OSHook;
+			productName = OSHook;
+			productReference = 9E374BE61E2BAE6F006A5AD3 /* libOSHook.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9E374BDE1E2BAE6E006A5AD3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "薛宇涛";
+				TargetAttributes = {
+					9E374BE51E2BAE6E006A5AD3 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = AUF3355GWB;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 9E374BE11E2BAE6E006A5AD3 /* Build configuration list for PBXProject "OSHook" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9E374BDD1E2BAE6E006A5AD3;
+			productRefGroup = 9E374BE71E2BAE6F006A5AD3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9E374BE51E2BAE6E006A5AD3 /* OSHook */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9E374BE21E2BAE6E006A5AD3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9E374BF61E2BAF4C006A5AD3 /* HookBridge.mm in Sources */,
+				9ECD788D209C13610002C705 /* GoogLeNetPlaces.mlmodel in Sources */,
+				9ECD7890209C137F0002C705 /* UIImage+Utils.m in Sources */,
+				9ECD7893209C138B0002C705 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9E374BED1E2BAE6F006A5AD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 339131001@qq.com (898P536RZC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu89;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		9E374BEE1E2BAE6F006A5AD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 339131001@qq.com (898P536RZC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu89;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9E374BF01E2BAE6F006A5AD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = AUF3355GWB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		9E374BF11E2BAE6F006A5AD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = AUF3355GWB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9E374BE11E2BAE6E006A5AD3 /* Build configuration list for PBXProject "OSHook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9E374BED1E2BAE6F006A5AD3 /* Debug */,
+				9E374BEE1E2BAE6F006A5AD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9E374BEF1E2BAE6F006A5AD3 /* Build configuration list for PBXNativeTarget "OSHook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9E374BF01E2BAE6F006A5AD3 /* Debug */,
+				9E374BF11E2BAE6F006A5AD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9E374BDE1E2BAE6E006A5AD3 /* Project object */;
+}
