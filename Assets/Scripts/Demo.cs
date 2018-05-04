@@ -14,10 +14,15 @@ public class Demo : MonoBehaviour
 
     void Start()
     {
+        OSHookBridge.CallMethod();
+    }
+
+    public void StartCoreML()
+    {
         if (Application.platform == RuntimePlatform.IPhonePlayer)
         {
-            IntPtr handle = Bridge.CreateInstance();
-            Debug.Log(Bridge.GetInstanceInt(handle));
+            IntPtr handle = OSHookBridge.CreateInstance();
+            Debug.Log(OSHookBridge.GetInstanceString(handle));
         }
     }
 
@@ -34,7 +39,7 @@ public class Demo : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.IPhonePlayer)
         {
-            Bridge.ImagePathToIOS(savePath);
+            OSHookBridge.ImagePathToIOS(savePath);
         }
     }
 }

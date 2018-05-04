@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		9E374BF61E2BAF4C006A5AD3 /* HookBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E374BF51E2BAF4C006A5AD3 /* HookBridge.mm */; };
 		9E374BF81E2BB0CE006A5AD3 /* HookBridge.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9E374BF71E2BAF63006A5AD3 /* HookBridge.h */; };
-		9ECD788D209C13610002C705 /* GoogLeNetPlaces.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD788C209C13610002C705 /* GoogLeNetPlaces.mlmodel */; };
 		9ECD7890209C137F0002C705 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD788E209C137F0002C705 /* UIImage+Utils.m */; };
 		9ECD7893209C138B0002C705 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD7892209C138B0002C705 /* ViewController.m */; };
+		9EEFF72F209C31710022C4F1 /* GoogLeNetPlaces.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9EEFF72E209C31710022C4F1 /* GoogLeNetPlaces.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,11 +31,11 @@
 		9E374BE61E2BAE6F006A5AD3 /* libOSHook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOSHook.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E374BF51E2BAF4C006A5AD3 /* HookBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HookBridge.mm; sourceTree = "<group>"; };
 		9E374BF71E2BAF63006A5AD3 /* HookBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HookBridge.h; sourceTree = "<group>"; };
-		9ECD788C209C13610002C705 /* GoogLeNetPlaces.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GoogLeNetPlaces.mlmodel; sourceTree = "<group>"; };
 		9ECD788E209C137F0002C705 /* UIImage+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utils.m"; sourceTree = "<group>"; };
 		9ECD788F209C137F0002C705 /* UIImage+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Utils.h"; sourceTree = "<group>"; };
 		9ECD7891209C138B0002C705 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9ECD7892209C138B0002C705 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9EEFF72E209C31710022C4F1 /* GoogLeNetPlaces.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GoogLeNetPlaces.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 				9ECD7892209C138B0002C705 /* ViewController.m */,
 				9E374BF51E2BAF4C006A5AD3 /* HookBridge.mm */,
 				9E374BF71E2BAF63006A5AD3 /* HookBridge.h */,
-				9ECD788C209C13610002C705 /* GoogLeNetPlaces.mlmodel */,
+				9EEFF72E209C31710022C4F1 /* GoogLeNetPlaces.mlmodel */,
 			);
 			path = OSHook;
 			sourceTree = "<group>";
@@ -138,9 +138,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E374BF61E2BAF4C006A5AD3 /* HookBridge.mm in Sources */,
-				9ECD788D209C13610002C705 /* GoogLeNetPlaces.mlmodel in Sources */,
 				9ECD7890209C137F0002C705 /* UIImage+Utils.m in Sources */,
 				9ECD7893209C138B0002C705 /* ViewController.m in Sources */,
+				9EEFF72F209C31710022C4F1 /* GoogLeNetPlaces.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
