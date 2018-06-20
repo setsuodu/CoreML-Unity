@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /* 
- * 通过.mm去调用.m中的方法
+ * 调用.m 中的 extern c 方法
  */
 public class Demo : MonoBehaviour
 {
@@ -15,19 +15,11 @@ public class Demo : MonoBehaviour
 
     void Start()
     {
-        OSHookBridge.CallMethod();
+		
     }
-
-    public void StartCoreML()
-    {
-        if (Application.platform == RuntimePlatform.IPhonePlayer)
-        {
-            IntPtr handle = OSHookBridge.CreateInstance();
-            Debug.Log(OSHookBridge.GetInstanceInt(handle));
-        }
-    }
-
-    public void ToIOS()
+   
+    // 通过unity获取外部（摄像头等）图像，传入sdk
+    public void SaveToIOS()
     {
         Texture2D t2d = m_textImage.sprite.texture;
 
@@ -44,6 +36,15 @@ public class Demo : MonoBehaviour
         }
     }
 
+    public void StartCoreML()
+    {
+		if (Application.platform == RuntimePlatform.IPhonePlayer)
+		{
+			OSHookBridge.StartCoreML();
+		}
+    }
+
+    // 插件回调
     public void GetResult(string res)
     {
         m_resultText.text = res;
