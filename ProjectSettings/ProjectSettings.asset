@@ -295,9 +295,9 @@ PlayerSettings:
   enableInternalProfiler: 0
   logObjCUncaughtExceptions: 1
   enableCrashReportAPI: 0
-  cameraUsageDescription: 
-  locationUsageDescription: 
-  microphoneUsageDescription: 
+  cameraUsageDescription: "\u8BF7\u6C42\u4F7F\u7528\u76F8\u673A"
+  locationUsageDescription: "\u8BF7\u6C42\u4F7F\u7528\u5B9A\u4F4D"
+  microphoneUsageDescription: "\u8BF7\u6C42\u4F7F\u7528\u9EA6\u514B\u98CE"
   switchNetLibKey: 
   switchSocketMemoryPoolSize: 6144
   switchSocketAllocatorPoolSize: 128

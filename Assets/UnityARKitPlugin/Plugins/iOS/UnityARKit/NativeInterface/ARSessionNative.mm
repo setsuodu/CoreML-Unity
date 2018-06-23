@@ -3,6 +3,13 @@
 #include "stdlib.h"
 #include "UnityAppController.h"
 
+#import <Vision/Vision.h>
+#import "MobileNet.h"
+
+VNRequest *visionCoreMLRequest; //图像分析请求的抽象类
+VNSequenceRequestHandler *sequenceRequestHandler; //处理与单个图像有关的一个或多个图像分析请求的对象
+VNImageRequestHandler *imageRequestHandler; //处理单个图像
+MobileNet *net;
 
 typedef struct
 {
@@ -63,7 +70,6 @@ enum UnityARSessionRunOptions
     UnityARSessionRunOptionsNone = 0,
     UnityARSessionRunOptionResetTracking           = (1 << 0),
     UnityARSessionRunOptionRemoveExistingAnchors   = (1 << 1)
-
 };
 
 typedef struct
@@ -712,6 +718,9 @@ static UnityPixelBuffer s_UnityPixelBuffers;
     if (self = [super init])
     {
         _classToCallbackMap = [[NSMutableDictionary alloc] init];
+        
+        [self setupVisionRequests];
+        [self loopCoreMLUpdate];
     }
     return self;
 }
@@ -749,7 +758,6 @@ static CGAffineTransform s_CurAffineTransform;
 
     GetUnityARCameraDataFromCamera(unityARCamera, frame.camera, _getPointCloudData);
 
-    
     CVPixelBufferRef pixelBuffer = frame.capturedImage;
     
     size_t imageWidth = CVPixelBufferGetWidth(pixelBuffer);
@@ -776,7 +784,6 @@ static CGAffineTransform s_CurAffineTransform;
 
     if (_frameCallback != NULL)
     {
-
         matrix_float4x4 rotatedMatrix = matrix_identity_float4x4;
         unityARCamera.videoParams.screenOrientation = 3;
 
@@ -885,6 +892,42 @@ static CGAffineTransform s_CurAffineTransform;
             s_CapturedImageTextureCbCr = textureCbCr;
         });
     }
+    
+    //识别视频流
+    //TODO:每帧跑太卡。
+    /*
+    if (!pixelBuffer) {
+        return;
+    }
+    if (!sequenceRequestHandler) {
+        sequenceRequestHandler = [[VNSequenceRequestHandler alloc]init];
+    }
+    [sequenceRequestHandler performRequests:@[visionCoreMLRequest] onCVPixelBuffer:pixelBuffer error:NULL];
+    */
+}
+
+- (void)loopCoreMLUpdate
+{
+    //NSLog(@"循环执行");
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        // 1. Run Update.
+        [self updateCoreML];
+        // 2. Loop this function.
+        [self loopCoreMLUpdate];
+    });
+}
+
+- (void)updateCoreML
+{
+    ARFrame *frame = _session.currentFrame;
+    CVPixelBufferRef pixelBuffer = frame.capturedImage;
+    if(pixelBuffer == nil){
+        return;
+    }
+    if (!sequenceRequestHandler) {
+        sequenceRequestHandler = [[VNSequenceRequestHandler alloc]init];
+    }
+    [sequenceRequestHandler performRequests:@[visionCoreMLRequest] onCVPixelBuffer:pixelBuffer error:NULL];
 }
 
 - (void)session:(ARSession *)session didFailWithError:(NSError *)error
@@ -973,6 +1016,44 @@ static CGAffineTransform s_CurAffineTransform;
     }
 }
 
+- (void) setupVisionRequests {
+    
+    MobileNet *mobilenetModel = [[MobileNet alloc] init];
+    VNCoreMLModel *visionModel = [VNCoreMLModel modelForMLModel:mobilenetModel.model error:nil];
+    
+    VNCoreMLRequest *classificationRequest = [[VNCoreMLRequest alloc] initWithModel:visionModel completionHandler:^(VNRequest * _Nonnull request, NSError * _Nullable error) {
+        
+        if (error) {
+            NSLog(@"Failed:%@",error);
+        }
+        
+        NSArray *observations = request.results;
+        if (!observations.count) {
+            return NSLog(@"无数据");
+        }
+        
+        VNClassificationObservation *observation = nil;
+        for (VNClassificationObservation *ob in observations) {
+            if (![ob isKindOfClass:[VNClassificationObservation class]]) {
+                continue;
+            }
+            if (!observations) {
+                observation = ob;
+                continue;
+            }
+            if (observation.confidence < ob.confidence) {
+                observation = ob;
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString * text = [NSString stringWithFormat:@"%@ (%.0f%%)", [[observation.identifier componentsSeparatedByString:@", "] firstObject], observation.confidence * 100];
+            NSLog(@"识别结果：%@", text);
+        });
+    }];
+    visionCoreMLRequest = classificationRequest;
+}
+
 @end
 
 /// Create the native mirror to the C# ARSession object
@@ -985,6 +1066,9 @@ extern "C" void* unity_CreateNativeARSession()
     unityCameraNearZ = .01;
     unityCameraFarZ = 30;
     s_UnityPixelBuffers.bEnable = false;
+    
+    //mySession = nativeSession;
+    
     return (__bridge_retained void*)nativeSession;
 }
 
@@ -1077,8 +1161,6 @@ extern "C" void StartWorldTrackingSessionWithOptions(void* nativeSession, ARKitW
     [session setupMetal];
 }
 
-
-
 extern "C" void StartWorldTrackingSession(void* nativeSession, ARKitWorldTrackingSessionConfiguration unityConfig)
 {
     UnityARSession* session = (__bridge UnityARSession*)nativeSession;
@@ -1109,8 +1191,6 @@ extern "C" void StartSessionWithOptions(void* nativeSession, ARKitSessionConfigu
     [session->_session runWithConfiguration:config options:runOpts ];
     [session setupMetal];
 }
-
-
 
 extern "C" void StartSession(void* nativeSession, ARKitSessionConfiguration unityConfig)
 {
