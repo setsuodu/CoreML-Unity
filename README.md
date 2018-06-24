@@ -3,14 +3,14 @@
 ### Description
 集成CoreML.framework，使unity工程具有机器学习图片识别的能力。
 
+### Features
+- 静态图片识别。
+- 视频流识别。
+
 ### Startup
 1. 下载最新的ARKit插件，替换UnityARKitPlugin包。
 1. 手动拖拽 .mlmodel到Xcode工程中。
 2. 运行。
-
-### Features
-- 静态图片识别。
-- 视频流识别。
 
 ### Roadmap
 - [ ] unity中拍照，并对内容识别。
