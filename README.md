@@ -17,7 +17,8 @@
 - [x] 优化oc回调。关于UnitySendMessage方法，NSString, const char*数据类型，等。
 - [x] 获取arkit的pixelbuffer，实时传给本插件的oc层 CVPixelBufferRef。
 - [x] 作为Pack包，依赖ARKit插件，避免session、buffer冲突。
-- [ ] 获取更多的model，使用机器学习训练。
+- [ ] 识别成功，将结果用GUI显示在世界坐标下。
+- [ ] 获取更多的mlmodel，使用机器学习训练。
 - [ ] more...
 
 ### Reference
