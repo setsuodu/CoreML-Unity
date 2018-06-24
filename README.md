@@ -1,7 +1,7 @@
 # coreml-unity
 
 ### Description
-集成CoreML.framework，使unity工程具有机器学习图片识别的能力。目前正在尝试阶段，已跑通基础的功能，遇到未知的坑可能影响到项目进展。
+集成CoreML.framework，使unity工程具有机器学习图片识别的能力。
 
 ### Startup
 1. 下载最新的ARKit插件，替换UnityARKitPlugin包。
