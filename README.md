@@ -10,8 +10,10 @@
 
 ### Startup
 1. 下载最新的ARKit插件，替换UnityARKitPlugin包。
-2. 手动拖拽 .mlmodel到Xcode工程中。
-3. 运行。
+2. 下载最新的TextMesh Pro，导入工程。
+3. 下载MobileNet.mlmodel。
+4. Build Xcode工程。
+5. 手动拖拽 .mlmodel到Xcode工程中。
 
 ### Roadmap
 - [ ] unity中拍照，并对内容识别。
