@@ -1,7 +1,4 @@
 ﻿using System.IO;
-using System.Xml;
-using System.Collections;
-using UnityEngine;
 using UnityEditor;
 using UnityEditor.iOS.Xcode;
 using UnityEditor.Callbacks;
@@ -32,7 +29,7 @@ public class XCodePostProcess
 		string targetGuid = pbxProj.TargetGuidByName("Unity-iPhone");
 
         // 添加.tbd
-        pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile("usr/lib/libz.tbd", "Frameworks/libz.tbd", PBXSourceTree.Sdk));
+        //pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile("usr/lib/libz.tbd", "Frameworks/libz.tbd", PBXSourceTree.Sdk));
         //pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile("usr/lib/libc++.tbd", "Frameworks/libc++.tbd", PBXSourceTree.Sdk));
 
 		// 添加系统框架.framework
@@ -43,18 +40,8 @@ public class XCodePostProcess
         // 添加一般文件
 		string fileName = "MobileNet.mlmodel";
 		string srcPath = Path.Combine("Assets/Plugins", fileName);
-		string dstPath = "Libraries/" + fileName;
-        /*
-		Directory.CreateDirectory(Path.Combine(path, "Libraries"));
-		File.Copy(srcPath, Path.Combine(path, dstPath));
-		Debug.Log("Copy To ==>> " + Path.Combine(path, dstPath));
-		pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(dstPath, dstPath, PBXSourceTree.Source));
-        */
 		File.Copy(srcPath, Path.Combine(path, fileName));
-		pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(fileName, dstPath, PBXSourceTree.Source));
-
-		pbxProj.AddFrameworkToProject(targetGuid, fileName, false); //系统内置框架，optional/required
-        pbxProj.AddFrameworksBuildPhase(targetGuid);
+		pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(fileName, fileName, PBXSourceTree.Source));
 
 		// 增加框架搜索路径
 		//pbxProj.SetBuildProperty(targetGuid, "FRAMEWORK_SEARCH_PATHS", "$(inherited)");
@@ -73,7 +60,7 @@ public class XCodePostProcess
 		plist.ReadFromString (File.ReadAllText (plistPath));
 
 		//Information Property List
-		PlistElementDict iplist = plist.root;
+		PlistElementDict plistDict = plist.root;
 
 		File.WriteAllText(plistPath, plist.WriteToString());
 	}
