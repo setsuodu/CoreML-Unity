@@ -34,7 +34,8 @@ public class XCodePostProcess
 		pbxProj.AddFrameworkToProject(targetGuid, "Vision.framework", false);
 		pbxProj.AddFrameworkToProject(targetGuid, "CoreML.framework", false);
 		pbxProj.AddFrameworksBuildPhase(targetGuid);
-      
+
+        /* 还是需要手动配置
         // 添加一般文件
 		string fileName = "MobileNet.mlmodel"; //必须输出到 Build/Library 文件夹中
 		string srcPath = Path.Combine("Assets/Plugins", fileName);
@@ -50,6 +51,7 @@ public class XCodePostProcess
 		string dstPath1 = "Libraries/" + file1;
         File.Copy(srcPath, Path.Combine(path, dstPath1));
         pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(dstPath1, dstPath1, PBXSourceTree.Source));
+        */
 
 		File.WriteAllText(projPath, pbxProj.WriteToString());
 	}

@@ -122,7 +122,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9}
   - component: {fileID: 10}
-  - component: {fileID: 12}
   - component: {fileID: 13}
   - component: {fileID: 11}
   - component: {fileID: 8}
@@ -197,13 +196,6 @@ Camera:
   m_StereoSeparation: 0.022
 --- !u!81 &11
 AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 7}
-  m_Enabled: 1
---- !u!92 &12
-Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -343,7 +335,7 @@ GameObject:
   - component: {fileID: 262411429}
   - component: {fileID: 262411428}
   m_Layer: 0
-  m_Name: SpawnText
+  m_Name: GameController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357,10 +349,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 262411427}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf34c214507374f12813497b472b4b73, type: 3}
+  m_Script: {fileID: 11500000, guid: f6caf68a0b2974442abc30bb68948107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 100000, guid: e074485b0819b4449b01c87f18ac288b, type: 2}
+  prefab: {fileID: 1230785517907080, guid: 6a64e4ef8a26d4f1f977ef18d443ec9e, type: 2}
 --- !u!4 &262411429
 Transform:
   m_ObjectHideFlags: 0

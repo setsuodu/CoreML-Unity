@@ -782,7 +782,7 @@ static UnityPixelBuffer s_UnityPixelBuffers;
             
             //TODO: 输出结果改为UnitySendMessage("Object","ClassName","param");
             const char * log = [text UTF8String];
-            UnitySendMessage("SpawnText","RecogniseCallback",log);
+            UnitySendMessage("GameController","RecogniseCallback",log);
         });
     }];
     visionCoreMLRequest = classificationRequest;
