@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf34c214507374f12813497b472b4b73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1926227635854996, guid: 816034d9a6f354e88aef3a9f6a323dd7, type: 2}
+  prefab: {fileID: 100000, guid: e074485b0819b4449b01c87f18ac288b, type: 2}
 --- !u!4 &262411429
 Transform:
   m_ObjectHideFlags: 0
@@ -648,7 +648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1052679868
 MeshRenderer:
   m_ObjectHideFlags: 0

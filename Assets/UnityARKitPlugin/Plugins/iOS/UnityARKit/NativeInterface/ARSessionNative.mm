@@ -3,6 +3,10 @@
 #include "stdlib.h"
 #include "UnityAppController.h"
 
+#import <Vision/Vision.h>
+#import "MobileNet.h"
+VNRequest *visionCoreMLRequest; //图像分析请求的抽象类
+VNSequenceRequestHandler *sequenceRequestHandler; //处理多个图像
 
 typedef struct
 {
@@ -712,8 +716,76 @@ static UnityPixelBuffer s_UnityPixelBuffers;
     if (self = [super init])
     {
         _classToCallbackMap = [[NSMutableDictionary alloc] init];
+        [self setupVisionRequests];
+        [self loopCoreMLUpdate];
     }
     return self;
+}
+
+// 异步处理
+- (void)loopCoreMLUpdate
+{
+    //NSLog(@"循环执行");
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        // 1. Run Update.
+        [self updateCoreML];
+        // 2. Loop this function.
+        [self loopCoreMLUpdate];
+    });
+}
+
+- (void)updateCoreML
+{
+    ARFrame *frame = _session.currentFrame;
+    CVPixelBufferRef pixelBuffer = frame.capturedImage;
+    if(pixelBuffer == nil){
+        return;
+    }
+    if (!sequenceRequestHandler) {
+        sequenceRequestHandler = [[VNSequenceRequestHandler alloc]init];
+    }
+    [sequenceRequestHandler performRequests:@[visionCoreMLRequest] onCVPixelBuffer:pixelBuffer error:NULL];
+}
+
+// 请求识别
+-(void) setupVisionRequests {
+    MobileNet *mobilenetModel = [[MobileNet alloc] init];
+    VNCoreMLModel *visionModel = [VNCoreMLModel modelForMLModel:mobilenetModel.model error:nil];
+    
+    VNCoreMLRequest *classificationRequest = [[VNCoreMLRequest alloc] initWithModel:visionModel completionHandler:^(VNRequest * _Nonnull request, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Failed:%@",error);
+        }
+        
+        NSArray *observations = request.results;
+        if (!observations.count) {
+            return NSLog(@"无数据");
+        }
+        
+        VNClassificationObservation *observation = nil;
+        for (VNClassificationObservation *ob in observations) {
+            if (![ob isKindOfClass:[VNClassificationObservation class]]) {
+                continue;
+            }
+            if (!observations) {
+                observation = ob;
+                continue;
+            }
+            if (observation.confidence < ob.confidence) {
+                observation = ob;
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString * text = [NSString stringWithFormat:@"%@ (%.0f%%)", [[observation.identifier componentsSeparatedByString:@", "] firstObject], observation.confidence * 100];
+            NSLog(@"识别结果：%@", text);
+            
+            //TODO: 输出结果改为UnitySendMessage("Object","ClassName","param");
+            const char * log = [text UTF8String];
+            UnitySendMessage("SpawnText","RecogniseCallback",log);
+        });
+    }];
+    visionCoreMLRequest = classificationRequest;
 }
 
 - (void)setupMetal

@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEditor.iOS.Xcode;
 using UnityEditor.Callbacks;
+using UnityEditor.XCodeEditor;
 
 public class XCodePostProcess
 {
@@ -12,6 +13,7 @@ public class XCodePostProcess
 		{
 			ModifyProj(path);
 			SetPlist(path);
+			//ModifyOC(path);
 		}
 	}
 
@@ -28,27 +30,19 @@ public class XCodePostProcess
 		// 配置目标TARGETS
 		string targetGuid = pbxProj.TargetGuidByName("Unity-iPhone");
 
-        // 添加.tbd
-        //pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile("usr/lib/libz.tbd", "Frameworks/libz.tbd", PBXSourceTree.Sdk));
-        //pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile("usr/lib/libc++.tbd", "Frameworks/libc++.tbd", PBXSourceTree.Sdk));
-
 		// 添加系统框架.framework
 		pbxProj.AddFrameworkToProject(targetGuid, "Vision.framework", false);
 		pbxProj.AddFrameworkToProject(targetGuid, "CoreML.framework", false);
 		pbxProj.AddFrameworksBuildPhase(targetGuid);
       
         // 添加一般文件
-		string fileName = "MobileNet.mlmodel";
+		string fileName = "MobileNet.mlmodel"; //必须输出到 Build/Library 文件夹中
 		string srcPath = Path.Combine("Assets/Plugins", fileName);
-		File.Copy(srcPath, Path.Combine(path, fileName));
-		pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(fileName, fileName, PBXSourceTree.Source));
-
-		// 增加框架搜索路径
-		//pbxProj.SetBuildProperty(targetGuid, "FRAMEWORK_SEARCH_PATHS", "$(inherited)");
-		//pbxProj.AddBuildProperty(targetGuid, "FRAMEWORK_SEARCH_PATHS", "$(PROJECT_DIR)/Frameworks");
-
-		// 设置teamID
-		//pbxProj.SetBuildProperty(targetGuid, "DEVELOPMENT_TEAM", "AUF3355GWB"); //填的是组织单位，而不是用户ID
+		string dstPath = "Libraries/" + fileName;
+		File.Copy(srcPath, Path.Combine(path, dstPath));
+		//pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(fileName, dstPath, PBXSourceTree.Source)); //xcode报红
+        //pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(dstPath, fileName, PBXSourceTree.Source)); //加到了外面
+		pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(dstPath, dstPath, PBXSourceTree.Source)); //xcode报红
 
 		File.WriteAllText(projPath, pbxProj.WriteToString());
 	}
@@ -65,21 +59,19 @@ public class XCodePostProcess
 		File.WriteAllText(plistPath, plist.WriteToString());
 	}
 
-	// ちょっとしたユーティリティ関数（http://goo.gl/fzYig8を参考）
-    internal static void CopyAndReplaceDirectory(string srcPath, string dstPath)
-    {
-        if (Directory.Exists(dstPath))
-            Directory.Delete(dstPath);
-		
-        if (File.Exists(dstPath))
-            File.Delete(dstPath);
+    // 修改OC代码
+	static void ModifyOC(string path)
+	{
+		// .mm文件
+		XClass mm = new XClass(path + "/Libraries/UnityARKitPlugin/Plugins/iOS/UnityARKit/NativeInterface/ARSessionNative.mm");
 
-        Directory.CreateDirectory(dstPath);
-
-		foreach (string file in Directory.GetFiles(srcPath))
-            File.Copy(file, Path.Combine(dstPath, Path.GetFileName(file)));
-
-		foreach (string dir in Directory.GetDirectories(srcPath))
-            CopyAndReplaceDirectory(dir, Path.Combine(dstPath, Path.GetFileName(dir)));
+		// 在指定代码后面增加一行代码
+        mm.WriteBelow("#include \"UnityAppController.h\"", "VNSequenceRequestHandler *sequenceRequestHandler;");
+		mm.WriteBelow("#include \"UnityAppController.h\"", "VNRequest *visionCoreMLRequest;");
+		mm.WriteBelow("#include \"UnityAppController.h\"", "#import \"MobileNet.h\"");
+		mm.WriteBelow("#include \"UnityAppController.h\"", "#import <Vision/Vision.h>");
+      
+		mm.WriteBelow("_classToCallbackMap = [[NSMutableDictionary alloc] init];",
+		              "[self setupVisionRequests];\n[self loopCoreMLUpdate];");
     }
 }

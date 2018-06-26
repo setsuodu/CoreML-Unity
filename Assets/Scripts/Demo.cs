@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,16 +9,16 @@ using UnityEngine.UI;
  */
 public class Demo : MonoBehaviour
 {
-    public Image m_textImage;
-    public Text m_resultText;
+	public Image m_textImage;
+	public Text m_resultText;
 
-    void Start()
-    {
-		
-    }
+	void Start()
+	{
+
+	}
    
-    // 通过unity获取外部（摄像头等）图像，传入sdk
-    public void SaveToIOS()
+	// 通过unity获取外部（摄像头等）图像，传入sdk
+	public void SaveToIOS()
     {
         Texture2D t2d = m_textImage.sprite.texture;
 
@@ -43,10 +42,10 @@ public class Demo : MonoBehaviour
 			OSHookBridge.StartCoreML();
 		}
     }
-
-    // 插件回调
-    public void GetResult(string res)
-    {
-        m_resultText.text = res;
-    }
+   
+	// 插件回调
+	public void GetResult(string res)
+	{
+		m_resultText.text = res;
+	}
 }
