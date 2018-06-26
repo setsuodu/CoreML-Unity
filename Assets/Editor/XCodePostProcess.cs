@@ -44,6 +44,13 @@ public class XCodePostProcess
         //pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(dstPath, fileName, PBXSourceTree.Source)); //加到了外面
 		pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(dstPath, dstPath, PBXSourceTree.Source)); //xcode报红
 
+		// GoogLeNetPlaces.mlmodel
+		string file1 = "GoogLeNetPlaces.mlmodel";
+		string srcPath1 = Path.Combine("Assets/Plugins", file1);
+		string dstPath1 = "Libraries/" + file1;
+        File.Copy(srcPath, Path.Combine(path, dstPath1));
+        pbxProj.AddFileToBuild(targetGuid, pbxProj.AddFile(dstPath1, dstPath1, PBXSourceTree.Source));
+
 		File.WriteAllText(projPath, pbxProj.WriteToString());
 	}
 
