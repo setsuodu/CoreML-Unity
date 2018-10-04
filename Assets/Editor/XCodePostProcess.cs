@@ -12,10 +12,10 @@ public class XCodePostProcess
 		if (buildTarget == BuildTarget.iOS)
 		{
 			ModifyProj(path);
-			SetPlist(path);
-			//ModifyOC(path);
-		}
-	}
+            //SetPlist(path); //不需要配置
+            //ModifyOC(path);
+        }
+    }
 
     /// <summary>
     /// 修改Xcode工程配置
@@ -62,7 +62,7 @@ public class XCodePostProcess
 		PlistDocument plist = new PlistDocument ();
 		plist.ReadFromString (File.ReadAllText (plistPath));
 
-		//Information Property List
+		// Information Property List
 		PlistElementDict plistDict = plist.root;
 
 		File.WriteAllText(plistPath, plist.WriteToString());

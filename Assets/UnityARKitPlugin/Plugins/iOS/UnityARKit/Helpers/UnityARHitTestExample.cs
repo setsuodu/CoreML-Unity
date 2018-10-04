@@ -62,7 +62,7 @@ namespace UnityEngine.XR.iOS
                         //ARHitTestResultType.ARHitTestResultTypeExistingPlane,
                         //ARHitTestResultType.ARHitTestResultTypeEstimatedHorizontalPlane, 
 						//ARHitTestResultType.ARHitTestResultTypeEstimatedVerticalPlane, 
-						ARHitTestResultType.ARHitTestResultTypeFeaturePoint
+						//ARHitTestResultType.ARHitTestResultTypeFeaturePoint
                     }; 
 					
                     foreach (ARHitTestResultType resultType in resultTypes)
