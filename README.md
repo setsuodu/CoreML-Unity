@@ -1,21 +1,24 @@
 # coreml-unity
 
-### Description
-集成CoreML.framework，使unity工程具有机器学习图片识别的能力。
+## Overview
 
-### Features
-- 静态图片识别。
-- 视频流识别。
-- 通过 PBXProject.AddFileToBuild 自动引入.mlmodel文件。
+集成CoreML & Vision，使unity具有机器学习图片识别的能力。
 
-### Startup
-1. 下载最新的ARKit插件，替换UnityARKitPlugin包。
-2. 下载最新的TextMesh Pro，导入工程。
-3. 下载MobileNet.mlmodel。
-4. Build Xcode工程。
-5. 手动拖拽 .mlmodel到Xcode工程中。
+## Require
 
-### Roadmap
+- UnityARKitPlugin 2.0；
+- TextMesh Pro；
+- [GoogLeNetPlaces.mlmodel](https://developer.apple.com/documentation/coreml/mlmodel) 用于静态图片识别程序；
+- MobileNet.mlmodel 用于结合Vision视频流识别；
+
+## Startup
+
+1. 打包 Xcode工程；
+2. 通过 PBXProject.AddFileToBuild() 自动引入 ``Plugins`` 目录中的 ``mlmodel`` 文件，或 手动拖拽 ``mlmodel`` 到 Xcode工程根目录；
+3. 在真机上运行;
+
+## Roadmap
+
 - [ ] unity中拍照，并对内容识别。
 - [x] 优化oc回调。关于UnitySendMessage方法，NSString, const char*数据类型，等。
 - [x] 获取arkit的pixelbuffer，实时传给本插件的oc层 CVPixelBufferRef。
@@ -25,6 +28,10 @@
 - [ ] runtime加载mlmodel。
 - [ ] 获取更多的mlmodel，使用机器学习训练。
 
-### Reference
-- https://www.jianshu.com/p/ed8e76081cad
+## Reference
+
 - https://github.com/hanleyweng/CoreML-in-ARKit
+
+## License
+
+[MIT](https://github.com/brakmic/OpenCV/blob/master/LICENSE)
