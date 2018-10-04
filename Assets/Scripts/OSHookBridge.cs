@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 public class OSHookBridge
 {
@@ -11,4 +12,11 @@ public class OSHookBridge
 
 	[DllImport("__Internal")]
 	public static extern void StartCoreML();
+
+    [DllImport("__Internal")]
+    //public static extern void StartVision(IntPtr nativeSession);
+    public static extern void StartVision();
+
+    [DllImport("__Internal")]
+    public static extern void StopVision();
 }

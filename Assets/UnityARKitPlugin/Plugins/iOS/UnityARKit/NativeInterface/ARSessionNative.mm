@@ -427,7 +427,15 @@ inline void UnityLightDataFromARFrame(UnityLightData& lightData, ARFrame *arFram
 static UnityPixelBuffer s_UnityPixelBuffers;
 
 
+static UnityARSession * SharedInstance;
+
 @implementation UnityARSession
+
++ (UnityARSession *)sharedInstance {
+    if (SharedInstance == nil)
+        SharedInstance = [[UnityARSession alloc] init];
+    return SharedInstance;
+}
 
 - (id)init
 {
@@ -436,8 +444,8 @@ static UnityPixelBuffer s_UnityPixelBuffers;
         _textureCache = NULL;
         _classToCallbackMap = [[NSMutableDictionary alloc] init];
         
-        [self setupVisionRequests];
-        [self loopCoreMLUpdate];
+        //[self setupVisionRequests];
+        //[self loopCoreMLUpdate];
     }
     return self;
 }
@@ -788,6 +796,7 @@ static CGAffineTransform s_CurAffineTransform;
 extern "C" void* unity_CreateNativeARSession()
 {
     UnityARSession *nativeSession = [[UnityARSession alloc] init];
+    SharedInstance = nativeSession; //初始化时取值
     nativeSession->_session = [ARSession new];
     nativeSession->_session.delegate = nativeSession;
     unityCameraNearZ = .01;
@@ -1277,7 +1286,29 @@ bool sessionConfig_IsEnvironmentTexturingSupported()
         return  false;
     }
 }
-  
+ 
+void StartVision()
+{
+    if (SharedInstance == nil){
+        NSLog(@"==> session is nil");
+        //return;
+    }
+    NSLog(@"==> session is exist");
+    
+    //UnityARSession* nativeSession = (__bridge UnityARSession*)sessionPtr;
+    //[nativeSession setupVisionRequests];
+    //[nativeSession loopCoreMLUpdate];
+    
+    [SharedInstance setupVisionRequests];
+    [SharedInstance loopCoreMLUpdate];
+    
+    NSLog(@"==>> AAA");
+}
+
+void StopVision()
+{
+    NSLog(@"stop vision thread");
+}
 
 #ifdef __cplusplus
 }

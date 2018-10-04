@@ -10,4 +10,6 @@
 
 @interface ViewController : NSObject
 
++ (ViewController *) sharedInstance;
+
 @end

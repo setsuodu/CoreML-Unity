@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.iOS;
 
 public class HitController : MonoBehaviour
@@ -10,9 +11,21 @@ public class HitController : MonoBehaviour
     UnityARSessionNativeInterface m_session;
 	string result;
 
+    [SerializeField] Button m_startButton;
+    [SerializeField] Button m_stopButton;
+
     void Awake()
     {
         m_session = UnityARSessionNativeInterface.GetARSessionNativeInterface();
+
+        m_startButton.onClick.AddListener(OnStartButtonClick);
+        m_stopButton.onClick.AddListener(OnStopButtonClick);
+    }
+
+    void OnDestroy()
+    {
+        m_startButton.onClick.RemoveListener(OnStartButtonClick);
+        m_stopButton.onClick.RemoveListener(OnStopButtonClick);
     }
 
     void Update()
@@ -66,6 +79,16 @@ public class HitController : MonoBehaviour
 				avatar.GetComponent<TextMesh>().text = result;
             }
         }
+    }
+
+    void OnStartButtonClick()
+    {
+        OSHookBridge.StartVision();
+    }
+
+    void OnStopButtonClick()
+    {
+        OSHookBridge.StopVision();
     }
 
     // coreml识别到的结果回调，oc层异步每帧调用

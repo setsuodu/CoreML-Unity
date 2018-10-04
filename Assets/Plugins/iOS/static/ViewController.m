@@ -2,7 +2,15 @@
 #import "GoogLeNetPlaces.h"
 #import "UIImage+Utils.h"
 
+static ViewController * SharedInstance;
+
 @implementation ViewController
+
++ (ViewController *)sharedInstance {
+    if (SharedInstance == nil)
+        SharedInstance = [[ViewController alloc] init];
+    return SharedInstance;
+}
 
 NSString * strPath = nil;
 
@@ -53,8 +61,7 @@ extern "C"
     
     void StartCoreML()
     {
-        ViewController * instance = [[ViewController alloc]init];
-        [instance startML];
+        [ViewController.sharedInstance startML];
     }
     
 #if defined (__cplusplus)
