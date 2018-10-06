@@ -431,35 +431,47 @@ static UnityARSession * SharedInstance;
 
 @implementation UnityARSession
 
-+ (UnityARSession *)sharedInstance {
-    if (SharedInstance == nil)
-        SharedInstance = [[UnityARSession alloc] init];
-    return SharedInstance;
-}
-
 - (id)init
 {
     if (self = [super init])
     {
         _textureCache = NULL;
         _classToCallbackMap = [[NSMutableDictionary alloc] init];
-        
-        //[self setupVisionRequests];
-        //[self loopCoreMLUpdate];
     }
     return self;
+}
+
+BOOL isCancelled = NO;
+
+- (void)startAction
+{
+    isCancelled = NO;
+    
+    [self setupVisionRequests];
+    [self loopCoreMLUpdate];
+}
+
+- (void)stopAction
+{
+    isCancelled = YES;
 }
 
 // 异步处理
 - (void)loopCoreMLUpdate
 {
+    if(isCancelled) {
+        return;
+    }
+    
     //NSLog(@"循环执行");
-    dispatch_async(dispatch_get_main_queue(), ^(){
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    dispatch_block_t block = ^(){
         // 1. Run Update.
         [self updateCoreML];
         // 2. Loop this function.
         [self loopCoreMLUpdate];
-    });
+    };
+    dispatch_async(queue, block);
 }
 
 - (void)updateCoreML
@@ -475,7 +487,7 @@ static UnityARSession * SharedInstance;
     [sequenceRequestHandler performRequests:@[visionCoreMLRequest] onCVPixelBuffer:pixelBuffer error:NULL];
 }
 
-// 请求识别
+// 初始化
 -(void) setupVisionRequests {
     MobileNet *mobilenetModel = [[MobileNet alloc] init];
     VNCoreMLModel *visionModel = [VNCoreMLModel modelForMLModel:mobilenetModel.model error:nil];
@@ -506,11 +518,10 @@ static UnityARSession * SharedInstance;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString * text = [NSString stringWithFormat:@"%@ (%.0f%%)", [[observation.identifier componentsSeparatedByString:@", "] firstObject], observation.confidence * 100];
-            NSLog(@"识别结果：%@", text);
-            
-            //TODO: 输出结果改为UnitySendMessage("Object","ClassName","param");
+            //NSLog(@"识别结果：%@", text);
+            //UnitySendMessage("Object","ClassName","param");
             const char * log = [text UTF8String];
-            UnitySendMessage("HitController","RecogniseCallback",log);
+            UnitySendMessage("HitController", "RecogniseCallback", log);
         });
     }];
     visionCoreMLRequest = classificationRequest;
@@ -796,7 +807,10 @@ static CGAffineTransform s_CurAffineTransform;
 extern "C" void* unity_CreateNativeARSession()
 {
     UnityARSession *nativeSession = [[UnityARSession alloc] init];
-    SharedInstance = nativeSession; //初始化时取值
+    
+    if(SharedInstance == nil)
+        SharedInstance = nativeSession; //初始化时取值
+    
     nativeSession->_session = [ARSession new];
     nativeSession->_session.delegate = nativeSession;
     unityCameraNearZ = .01;
@@ -1289,25 +1303,19 @@ bool sessionConfig_IsEnvironmentTexturingSupported()
  
 void StartVision()
 {
-    if (SharedInstance == nil){
+    if (SharedInstance == nil) {
         NSLog(@"==> session is nil");
-        //return;
+        return;
     }
     NSLog(@"==> session is exist");
     
-    //UnityARSession* nativeSession = (__bridge UnityARSession*)sessionPtr;
-    //[nativeSession setupVisionRequests];
-    //[nativeSession loopCoreMLUpdate];
-    
-    [SharedInstance setupVisionRequests];
-    [SharedInstance loopCoreMLUpdate];
-    
-    NSLog(@"==>> AAA");
+    [SharedInstance startAction];
 }
 
 void StopVision()
 {
     NSLog(@"stop vision thread");
+    [SharedInstance stopAction];
 }
 
 #ifdef __cplusplus
