@@ -1,6 +1,6 @@
 # coreml-unity
 
-[![license](https://img.shields.io/badge/license-mit-red.svg)](https://github.com/brakmic/OpenCV/blob/master/LICENSE)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/brakmic/OpenCV/blob/master/LICENSE)
 
 ## Overview
 
@@ -17,17 +17,17 @@
 
 1. 打包 Xcode工程；
 2. 通过 PBXProject.AddFileToBuild() 自动引入 ``Plugins`` 目录中的 ``mlmodel`` 文件，或 手动拖拽 ``mlmodel`` 到 Xcode工程根目录；
-3. 在真机上运行;
+3. Language - Objective C -> Enable Objective-C Exceptions改为YES;
+4. 在真机上运行;
 
 ## Roadmap
 
-- [ ] unity中拍照，并对内容识别。
+- [x] unity中拍照，并对内容识别。
 - [x] 优化oc回调。关于UnitySendMessage方法，NSString, const char*数据类型，等。
 - [x] 获取arkit的pixelbuffer，实时传给本插件的oc层 CVPixelBufferRef。
 - [x] 作为Pack包，依赖ARKit插件，避免session、buffer冲突。
 - [x] 识别成功，将结果用TextMesh显示在世界坐标下。
-- [ ] 使用点云，定位屏幕中心射线交点？
-- [ ] runtime加载mlmodel。
+- [x] runtime加载mlmodel。
 - [ ] 获取更多的mlmodel，使用机器学习训练。
 
 ## Reference
