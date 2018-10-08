@@ -8,9 +8,9 @@
 
 ## Require
 
-- UnityARKitPlugin 2.0；
+- [UnityARKitPlugin 2.0](https://bitbucket.org/Unity-Technologies/unity-arkit-plugin)；
 - TextMesh Pro；
-- [GoogLeNetPlaces.mlmodel](https://developer.apple.com/documentation/coreml/mlmodel) 用于静态图片识别程序；
+- [GoogLeNetPlaces.mlmodel](https://developer.apple.com/machine-learning/build-run-models/) 用于静态图片识别程序；
 - MobileNet.mlmodel 用于结合Vision视频流识别；
 
 ## Startup
