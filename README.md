@@ -1,5 +1,7 @@
 # coreml-unity
 
+[![license](https://img.shields.io/badge/license-mit-red.svg)](https://github.com/brakmic/OpenCV/blob/master/LICENSE)
+
 ## Overview
 
 集成CoreML & Vision，使unity具有机器学习图片识别的能力。
@@ -31,7 +33,3 @@
 ## Reference
 
 - https://github.com/hanleyweng/CoreML-in-ARKit
-
-## License
-
-[MIT](https://github.com/brakmic/OpenCV/blob/master/LICENSE)
