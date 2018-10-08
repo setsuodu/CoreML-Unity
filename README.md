@@ -1,6 +1,6 @@
 # coreml-unity
 
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/brakmic/OpenCV/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg?style=social)](https://github.com/brakmic/OpenCV/blob/master/LICENSE)
 
 ## Overview
 
