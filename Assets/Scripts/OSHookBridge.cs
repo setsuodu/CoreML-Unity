@@ -14,7 +14,9 @@ public class OSHookBridge
 	public static extern void StartCoreML();
 
     [DllImport("__Internal")]
-    //public static extern void StartVision(IntPtr nativeSession);
+    public static extern void LoadMLModel(string path);
+
+    [DllImport("__Internal")]
     public static extern void StartVision();
 
     [DllImport("__Internal")]

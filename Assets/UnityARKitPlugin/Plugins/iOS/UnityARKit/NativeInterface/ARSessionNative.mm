@@ -7,8 +7,10 @@
 #include "UnityAppController.h"
 #include "ARKitDefines.h"
 
+#import <CoreML/MLModel+MLModelCompilation.h>
 #import <Vision/Vision.h>
-#import "MobileNet.h"
+//#import "MobileNet.h"
+
 VNRequest *visionCoreMLRequest; //图像分析请求的抽象类
 VNSequenceRequestHandler *sequenceRequestHandler; //处理多个图像
 
@@ -425,7 +427,7 @@ inline void UnityLightDataFromARFrame(UnityLightData& lightData, ARFrame *arFram
 @end
 
 static UnityPixelBuffer s_UnityPixelBuffers;
-
+static NSString* filePath;
 
 static UnityARSession * SharedInstance;
 
@@ -441,14 +443,70 @@ static UnityARSession * SharedInstance;
     return self;
 }
 
+- (NSURL*)setCoreMLModel:(NSString*)modelPath {
+    NSError *error = nil;
+    if(!modelPath){
+        NSLog(@"modelPath is nil");
+    }
+    
+    // NSString转NSURL
+    NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
+    
+    NSURL *coremlc = nil;
+    @try {
+        coremlc = [MLModel compileModelAtURL:modelURL error:&error];
+        if(!coremlc){
+            NSLog(@"error=%@", [error localizedDescription]);
+        }
+    } @catch (NSException *exception) {
+        NSLog(@"%@", exception.reason);
+    } @finally {
+        
+    }
+    
+    return coremlc;
+}
+
 BOOL isCancelled = NO;
+NSURL *compileUrl = nil;
+MLModel *model = nil;
 
 - (void)startAction
 {
     isCancelled = NO;
     
-    [self setupVisionRequests];
+    if(filePath == nil) {
+        NSLog(@"下载失败，无法setCoreMLModel");
+        return;
+    }
+    
+    if(compileUrl == nil) {
+        compileUrl = [self setCoreMLModel:filePath];
+    }
+    if(model == nil) {
+        model = [MLModel modelWithContentsOfURL:compileUrl error:nil];
+    }
+    
+    [self setupVisionRequests:model];
     [self loopCoreMLUpdate];
+    
+    /*
+    NSURL *downloadUrl = [NSURL URLWithString:@"https://www.setsuodu.com/download/MobileNet.mlmodel"];
+    NSURL *compileUrl = [MLModel compileModelAtURL:downloadUrl error:nil];
+    MLModel *model = [MLModel modelWithContentsOfURL:compileUrl error:nil];
+    if(model == nil) {
+        NSLog(@"==>> model is empty!");
+        return;
+    } else {
+        NSLog(@"==>> model is loaded.");
+    }
+    [self setupVisionRequests:model];
+    */
+    
+    //MobileNet *mobilenetModel = [[MobileNet alloc] init];
+    //[self setupVisionRequests:mobilenetModel.model];
+    
+    //[self loopCoreMLUpdate];
 }
 
 - (void)stopAction
@@ -488,9 +546,13 @@ BOOL isCancelled = NO;
 }
 
 // 初始化
--(void) setupVisionRequests {
-    MobileNet *mobilenetModel = [[MobileNet alloc] init];
-    VNCoreMLModel *visionModel = [VNCoreMLModel modelForMLModel:mobilenetModel.model error:nil];
+- (void)setupVisionRequests:(MLModel*)model {
+    
+    //MobileNet *mobilenetModel = [[MobileNet alloc] init];
+    //VNCoreMLModel *visionModel = [VNCoreMLModel modelForMLModel:mobilenetModel.model error:nil];
+    
+    // 从外部读取
+    VNCoreMLModel *visionModel = [VNCoreMLModel modelForMLModel:model error:nil];
     
     VNCoreMLRequest *classificationRequest = [[VNCoreMLRequest alloc] initWithModel:visionModel completionHandler:^(VNRequest * _Nonnull request, NSError * _Nullable error) {
         if (error) {
@@ -1297,10 +1359,10 @@ bool sessionConfig_IsEnvironmentTexturingSupported()
     }
     else
     {
-        return  false;
+        return false;
     }
 }
- 
+
 void StartVision()
 {
     if (SharedInstance == nil) {
@@ -1316,6 +1378,13 @@ void StopVision()
 {
     NSLog(@"stop vision thread");
     [SharedInstance stopAction];
+}
+
+void LoadMLModel(char * path)
+{
+    NSString * strPath = [NSString stringWithUTF8String:path];
+    NSLog(@"OC==>>%@", strPath);
+    filePath = strPath;
 }
 
 #ifdef __cplusplus

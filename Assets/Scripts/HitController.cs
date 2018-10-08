@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class HitController : MonoBehaviour
     UnityARSessionNativeInterface m_session;
 	string result;
 
+    [SerializeField] Button m_loadButton;
     [SerializeField] Button m_startButton;
     [SerializeField] Button m_stopButton;
 
@@ -18,12 +20,14 @@ public class HitController : MonoBehaviour
     {
         m_session = UnityARSessionNativeInterface.GetARSessionNativeInterface();
 
+        m_loadButton.onClick.AddListener(OnLoadButtonClick);
         m_startButton.onClick.AddListener(OnStartButtonClick);
         m_stopButton.onClick.AddListener(OnStopButtonClick);
     }
 
     void OnDestroy()
     {
+        m_loadButton.onClick.RemoveListener(OnLoadButtonClick);
         m_startButton.onClick.RemoveListener(OnStartButtonClick);
         m_stopButton.onClick.RemoveListener(OnStopButtonClick);
     }
@@ -79,6 +83,48 @@ public class HitController : MonoBehaviour
 				avatar.GetComponent<TextMesh>().text = result;
             }
         }
+    }
+
+    IEnumerator DownloadMLModel()
+    {
+        string url = "http://www.setsuodu.com/download/MobileNet.mlmodel"; //WWW不支持https
+        string filePath = Application.persistentDataPath + "/MobileNet.mlmodel";
+
+        if(!File.Exists(filePath))
+        {
+            Debug.Log("开始下载MLModel...");
+
+            WWW www = new WWW(url);
+            while (!www.isDone)
+            {
+                Debug.Log(www.progress * 100 + "%");
+                yield return null;
+            }
+            yield return www;
+            if (!string.IsNullOrEmpty(www.error))
+            {
+                Debug.Log(www.error);
+                yield break;
+            }
+
+            if (www.isDone)
+            {
+                byte[] bytes = www.bytes;
+                FileStream fileStream = File.Create(filePath);
+                fileStream.Write(bytes, 0, bytes.Length);
+                fileStream.Close();
+            }
+        }
+
+        Debug.Log("下载完成:" + filePath);
+        // /Users/xueyutao/Library/Application Support/setsuodu/CoreMLPlugin/MobileNet.mlmodel
+
+        OSHookBridge.LoadMLModel(filePath);
+    }
+
+    void OnLoadButtonClick()
+    {
+        StartCoroutine(DownloadMLModel());
     }
 
     void OnStartButtonClick()
