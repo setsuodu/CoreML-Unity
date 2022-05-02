@@ -3,6 +3,7 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+/[Xx]code/
 /Assets/AssetStoreTools*
 
 /.vs/
