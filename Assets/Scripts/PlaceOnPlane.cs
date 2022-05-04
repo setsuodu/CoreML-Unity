@@ -81,7 +81,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void SetText(string result)
         {
-            m_TextMesh.text = result;
+            if (m_TextMesh != null)
+                m_TextMesh.text = result;
         }
     }
 }
