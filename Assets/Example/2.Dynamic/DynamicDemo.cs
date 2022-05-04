@@ -7,31 +7,22 @@ using UnityEngine.XR.ARSubsystems;
 
 public class DynamicDemo : MonoBehaviour
 {
+    static string modelName = "MobileNetV2.mlmodel";
+
     public ARSession arSession;
     public ARCameraManager cameraManager;
     public XRCameraParams cameraParams;
     public XRCameraFrame cameraFrame;
 
-    //public System.IntPtr native;
-
     public Button m_LoadBtn;
     public Button m_StartBtn;
     public Button m_StopBtn;
+    public Text m_ResultText;
 
     void Awake()
     {
         if (cameraManager == null)
             cameraManager = FindObjectOfType<ARCameraManager>();
-
-        //cameraParams = new XRCameraParams
-        //{
-        //    screenWidth = Screen.width,
-        //    screenHeight = Screen.height,
-        //    screenOrientation = ScreenOrientation.Portrait,
-        //    zFar = Camera.main.farClipPlane,
-        //    zNear = Camera.main.nearClipPlane,
-        //};
-        //cameraFrame = new XRCameraFrame();
     }
 
     void OnEnable()
@@ -43,11 +34,10 @@ public class DynamicDemo : MonoBehaviour
         }
     }
 
-    string url = "http://192.168.1.103/MobileNetV2.mlmodel"; //WWW不支持https
-
     IEnumerator DownloadMLModel()
     {
-        string filePath = Application.persistentDataPath + "/MobileNet.mlmodel";
+        string filePath = $"{Application.persistentDataPath }/{modelName}";
+        string url = $"http://192.168.1.103/{modelName}"; //WWW不支持https
 
         if (!File.Exists(filePath))
         {
@@ -99,5 +89,6 @@ public class DynamicDemo : MonoBehaviour
     public void RecogniseCallback(string log)
     {
         Debug.Log("识别结果 ==>> " + log);
+        m_ResultText.text = log;
     }
 }
