@@ -37,7 +37,7 @@ public class DynamicDemo : MonoBehaviour
     IEnumerator DownloadMLModel()
     {
         string filePath = $"{Application.persistentDataPath }/{modelName}";
-        string url = $"http://192.168.1.103/{modelName}"; //WWW不支持https
+        string url = $"192.168.1.103/download/{modelName}"; //WWW不支持https
 
         if (!File.Exists(filePath))
         {
@@ -90,5 +90,9 @@ public class DynamicDemo : MonoBehaviour
     {
         Debug.Log("识别结果 ==>> " + log);
         m_ResultText.text = log;
+        doSetText?.Invoke(log);
     }
+
+    public delegate void SetText(string str);
+    public static SetText doSetText;
 }

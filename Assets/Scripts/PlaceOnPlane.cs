@@ -18,6 +18,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         GameObject m_PlacedPrefab;
+        TextMesh m_TextMesh;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -36,6 +37,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Awake()
         {
             m_RaycastManager = GetComponent<ARRaycastManager>();
+            DynamicDemo.doSetText = SetText;
         }
 
         bool TryGetTouchPosition(out Vector2 touchPosition)
@@ -64,6 +66,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (spawnedObject == null)
                 {
                     spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+                    m_TextMesh = spawnedObject.GetComponentInChildren<TextMesh>();
                 }
                 else
                 {
@@ -75,5 +78,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
         ARRaycastManager m_RaycastManager;
+
+        public void SetText(string result)
+        {
+            m_TextMesh.text = result;
+        }
     }
 }
